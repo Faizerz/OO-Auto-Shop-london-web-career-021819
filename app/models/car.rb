@@ -1,11 +1,27 @@
 class Car
 
-  attr_reader :make, :model
+  attr_reader :make, :model, :classification, :owner, :mechanic
 
-  def initialize(make, model, classification)
+  @@all = []
+
+  def initialize(make, model, classification, owner, mechanic)
     @make = make
     @model = model
     @classification = classification
+    @mechanic = mechanic
+    @owner = owner
+    @@all << self
   end
 
+  def self.all
+    @@all
+  end
+
+  def self.classifications
+    @@all.map{|car| car.classification}
+  end
+
+  def specialty_mechanic
+    Mechanic.all.select{|mechanic| mechanic.specialty == self.classification}
+  end
 end
